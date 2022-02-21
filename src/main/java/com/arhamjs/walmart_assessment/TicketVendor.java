@@ -1,6 +1,8 @@
 package com.arhamjs.walmart_assessment;
 
 import com.arhamjs.walmart_assessment.rules.Rule;
+import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
+import com.arhamjs.walmart_assessment.ticket.Ticket;
 
 public final class TicketVendor {
     public static TicketVendor with(Rule... ensurers) {
@@ -13,7 +15,9 @@ public final class TicketVendor {
         this.ensurers = ensurers;
     }
 
-    public SeatingMap vend(SeatingMap map, Request request) {
-        return null;
+    public Ticket vend(Theatre theatre, Request request) {
+        SeatingMap currentSeatingMap = theatre.getMap();
+        SeatingAssignment[] seatingAssignments = new SeatingAssignment[request.getSeatsRequested()];
+        return theatre.createTicket(seatingAssignments);
     }
 }

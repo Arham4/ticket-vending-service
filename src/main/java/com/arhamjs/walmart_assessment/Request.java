@@ -12,4 +12,12 @@ public final class Request {
         this.identifier = identifier;
         this.seatsRequested = seatsRequested;
     }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public int getSeatsRequested() {
+        return seatsRequested;
+    }
 }
