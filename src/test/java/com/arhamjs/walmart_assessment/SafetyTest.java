@@ -1,6 +1,7 @@
 package com.arhamjs.walmart_assessment;
 
 import com.arhamjs.walmart_assessment.rules.SafetyRule;
+import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,17 +15,15 @@ public final class SafetyTest {
 
         TicketVendor vendor = TicketVendor.with(SafetyRule.create());
 
-        Ticket ticket = vendor.vend(theatre, Request.of("R001", 2));
-        ticket = vendor.vend(theatre, Request.of("R002", 2));
+        vendor.vend(theatre, Request.of("R001", 2));
+        Ticket finalTicket = vendor.vend(theatre, Request.of("R002", 2));
 
-        SeatingMap expected = SeatingMap.builder(10, 20)
-                .markOccupied(0, 0)
-                .markOccupied(0, 1)
-                .markOccupied(0, 5)
-                .markOccupied(0, 6)
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(0, 5))
+                .seat(SeatingAssignment.of(0, 6))
                 .build();
 
-        Assertions.assertEquals(theatre.getMap(), expected);
+        Assertions.assertEquals(finalTicket, expectedTicket);
     }
 
     @Test
@@ -34,17 +33,14 @@ public final class SafetyTest {
 
         TicketVendor vendor = TicketVendor.with(SafetyRule.create());
 
-        Ticket ticket = vendor.vend(theatre, Request.of("R001", 2));
-        ticket = vendor.vend(theatre, Request.of("R002", 2));
+        vendor.vend(theatre, Request.of("R001", 2));
+        vendor.vend(theatre, Request.of("R002", 2));
+        Ticket finalTicket = vendor.vend(theatre, Request.of("R003", 1));
 
-        SeatingMap expected = SeatingMap.builder(10, 20)
-                .markOccupied(0, 0)
-                .markOccupied(0, 1)
-                .markOccupied(0, 5)
-                .markOccupied(0, 6)
-                .markOccupied(1, 0)
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(1, 0))
                 .build();
 
-        Assertions.assertEquals(theatre.getMap(), expected);
+        Assertions.assertEquals(finalTicket, expectedTicket);
     }
 }

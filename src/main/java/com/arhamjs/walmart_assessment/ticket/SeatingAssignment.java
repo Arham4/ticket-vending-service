@@ -12,4 +12,12 @@ public final class SeatingAssignment {
         this.row = row;
         this.seat = seat;
     }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getSeat() {
+        return seat;
+    }
 }
