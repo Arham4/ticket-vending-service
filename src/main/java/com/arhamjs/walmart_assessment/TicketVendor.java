@@ -1,15 +1,15 @@
 package com.arhamjs.walmart_assessment;
 
-import com.arhamjs.walmart_assessment.ensurer.Ensurer;
+import com.arhamjs.walmart_assessment.rules.Rule;
 
 public final class TicketVendor {
-    public static TicketVendor with(Ensurer... ensurers) {
+    public static TicketVendor with(Rule... ensurers) {
         return new TicketVendor(ensurers);
     }
 
-    private Ensurer[] ensurers;
+    private Rule[] ensurers;
 
-    private TicketVendor(Ensurer... ensurers) {
+    private TicketVendor(Rule... ensurers) {
         this.ensurers = ensurers;
     }
 

@@ -1,6 +1,6 @@
 package com.arhamjs.walmart_assessment;
 
-import com.arhamjs.walmart_assessment.ensurer.SafetyEnsurer;
+import com.arhamjs.walmart_assessment.rules.SafetyRule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ public final class SafetyTest {
     @Test
     public void Should_AssignGroups3SeatsAway_IfDifferentGroupsRequest() {
         SeatingMap map = SeatingMap.empty(10, 20);
-        TicketVendor vendor = TicketVendor.with(SafetyEnsurer.empty());
+        TicketVendor vendor = TicketVendor.with(SafetyRule.create());
 
         SeatingMap newMap = vendor.vend(map, Request.of("R001", 2));
         newMap = vendor.vend(newMap, Request.of("R002", 2));
@@ -32,7 +32,7 @@ public final class SafetyTest {
                 .markOccupied(0, 5)
                 .markOccupied(0, 6)
                 .build();
-        TicketVendor vendor = TicketVendor.with(SafetyEnsurer.empty());
+        TicketVendor vendor = TicketVendor.with(SafetyRule.create());
 
         SeatingMap newMap = vendor.vend(map, Request.of("R001", 1));
 
