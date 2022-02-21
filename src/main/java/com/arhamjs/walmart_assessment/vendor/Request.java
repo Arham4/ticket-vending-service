@@ -1,4 +1,4 @@
-package com.arhamjs.walmart_assessment;
+package com.arhamjs.walmart_assessment.vendor;
 
 public final class Request {
     public static Request of(String identifier, int seatsRequested) {

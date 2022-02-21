@@ -3,6 +3,8 @@ package com.arhamjs.walmart_assessment;
 import com.arhamjs.walmart_assessment.rules.SafetyRule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
+import com.arhamjs.walmart_assessment.vendor.Request;
+import com.arhamjs.walmart_assessment.vendor.TicketVendor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

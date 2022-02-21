@@ -1,5 +1,7 @@
-package com.arhamjs.walmart_assessment;
+package com.arhamjs.walmart_assessment.vendor;
 
+import com.arhamjs.walmart_assessment.SeatingMap;
+import com.arhamjs.walmart_assessment.Theatre;
 import com.arhamjs.walmart_assessment.rules.Rule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
