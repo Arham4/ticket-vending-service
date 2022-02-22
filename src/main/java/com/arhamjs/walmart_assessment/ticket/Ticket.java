@@ -68,7 +68,9 @@ public final class Ticket {
 
     public String toOutputString() {
         final StringBuilder sb = new StringBuilder(requestIdentifier + " ");
-        for (SeatingAssignment assignment : seatingAssignments) {
+        SeatingAssignment[] orderedAssignments = seatingAssignments.clone();
+        Arrays.sort(orderedAssignments);
+        for (SeatingAssignment assignment : orderedAssignments) {
             sb.append(assignment.toOutputString()).append(",");
         }
         return sb.substring(0, sb.length() - 1);

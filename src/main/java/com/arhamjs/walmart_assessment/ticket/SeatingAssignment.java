@@ -2,7 +2,7 @@ package com.arhamjs.walmart_assessment.ticket;
 
 import java.util.Objects;
 
-public final class SeatingAssignment {
+public final class SeatingAssignment implements Comparable<SeatingAssignment> {
     public static SeatingAssignment of(int row, int seat) {
         return new SeatingAssignment(row, seat);
     }
@@ -51,5 +51,13 @@ public final class SeatingAssignment {
 
     private String rowAsciiRepresentation() {
         return ((char) ('A' + row)) + "";
+    }
+
+    @Override
+    public int compareTo(SeatingAssignment o) {
+        if (row == o.row) {
+            return Integer.compare(seat, o.seat);
+        }
+        return Integer.compare(row, o.row);
     }
 }
