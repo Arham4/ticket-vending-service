@@ -44,4 +44,12 @@ public final class SeatingAssignment {
         sb.append('}');
         return sb.toString();
     }
+
+    public String toOutputString() {
+        return rowAsciiRepresentation() + seat;
+    }
+
+    private String rowAsciiRepresentation() {
+        return ((char) ('A' + row)) + "";
+    }
 }

@@ -65,4 +65,12 @@ public final class Ticket {
         sb.append('}');
         return sb.toString();
     }
+
+    public String toOutputString() {
+        final StringBuilder sb = new StringBuilder(requestIdentifier + " ");
+        for (SeatingAssignment assignment : seatingAssignments) {
+            sb.append(assignment.toOutputString()).append(",");
+        }
+        return sb.substring(0, sb.length() - 1);
+    }
 }
