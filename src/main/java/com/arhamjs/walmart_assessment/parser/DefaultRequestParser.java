@@ -16,6 +16,11 @@ public final class DefaultRequestParser implements RequestParser {
 
     @Override
     public List<Request> parse(String input) {
-        return new ArrayList<>();
+        List<Request> result = new ArrayList<>();
+        for (String line : input.split("\n")) {
+            String[] split = line.split(" ");
+            result.add(Request.of(split[0], Integer.parseInt(split[1])));
+        }
+        return result;
     }
 }
