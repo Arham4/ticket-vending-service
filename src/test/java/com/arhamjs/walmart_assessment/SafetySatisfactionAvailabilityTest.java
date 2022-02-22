@@ -57,8 +57,6 @@ public final class SafetySatisfactionAvailabilityTest {
                 .build();
         TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(availabilityRule, safetyRule), safetyRule, availabilityRule);
 
-        vendor.vend(theatre, Request.of("R001", 2));
-        vendor.vend(theatre, Request.of("R002", 2));
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R003", 9));
         Assertions.assertTrue(finalTicket.isPresent());
 
@@ -96,10 +94,10 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(1, 0))
                 .seat(SeatingAssignment.of(1, 1))
+                .seat(SeatingAssignment.of(1, 0))
                 .seat(SeatingAssignment.of(1, 2))
-                .seat(SeatingAssignment.of(0, 0))
+                .seat(SeatingAssignment.of(0, 1))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
