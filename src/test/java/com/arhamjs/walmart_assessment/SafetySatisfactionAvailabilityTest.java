@@ -12,18 +12,19 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-public final class SafetyAndSatisfactionTest {
+public final class SafetySatisfactionAvailabilityTest {
     @Test
     public void Should_GroupTowardsMiddle_AndRespectSafety() {
         final int rows = 10;
         SeatingMap map = SeatingMap.empty(rows, 20);
         Theatre theatre = Theatre.of(map);
 
+        AvailabilityRule availabilityRule = AvailabilityRule.create();
         SafetyRule safetyRule = SafetyRule.builder()
                 .distance(3)
-                .rule(AvailabilityRule.create())
+                .rule(availabilityRule)
                 .build();
-        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create(), safetyRule), safetyRule);
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(availabilityRule, safetyRule), safetyRule, availabilityRule);
 
         vendor.vend(theatre, Request.of("R001", 2));
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R002", 2));
@@ -44,11 +45,12 @@ public final class SafetyAndSatisfactionTest {
         SeatingMap map = SeatingMap.empty(rows, 7);
         Theatre theatre = Theatre.of(map);
 
+        AvailabilityRule availabilityRule = AvailabilityRule.create();
         SafetyRule safetyRule = SafetyRule.builder()
                 .distance(3)
-                .rule(AvailabilityRule.create())
+                .rule(availabilityRule)
                 .build();
-        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create(), safetyRule), safetyRule);
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(availabilityRule, safetyRule), safetyRule, availabilityRule);
 
         vendor.vend(theatre, Request.of("R001", 2));
         vendor.vend(theatre, Request.of("R002", 2));
