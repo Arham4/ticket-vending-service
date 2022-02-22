@@ -30,7 +30,7 @@ public final class SafetyTest {
                 .seat(SeatingAssignment.of(0, 6))
                 .build();
 
-        Assertions.assertEquals(acquiredTicket, expectedTicket);
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
 
     @Test
@@ -50,6 +50,6 @@ public final class SafetyTest {
                 .seat(SeatingAssignment.of(1, 0))
                 .build();
 
-        Assertions.assertEquals(acquiredTicket, expectedTicket);
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
 }
