@@ -6,14 +6,7 @@ import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SafetyRule implements Rule {
-    public static SafetyRule create() {
-        return new SafetyRule();
-    }
-
-    private SafetyRule() {
-    }
-
+public final class AvailabilityRule implements Rule {
     @Override
     public List<SeatingAssignment> findViableSeatingAssignments(SeatingMap map) {
         return new ArrayList<>();

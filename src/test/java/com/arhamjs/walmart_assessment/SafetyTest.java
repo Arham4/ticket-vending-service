@@ -8,6 +8,8 @@ import com.arhamjs.walmart_assessment.vendor.TicketVendor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 public final class SafetyTest {
 
     @Test
@@ -18,14 +20,16 @@ public final class SafetyTest {
         TicketVendor vendor = TicketVendor.with(SafetyRule.create());
 
         vendor.vend(theatre, Request.of("R001", 2));
-        Ticket finalTicket = vendor.vend(theatre, Request.of("R002", 2));
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R002", 2));
+        Assertions.assertTrue(finalTicket.isPresent());
 
+        Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
                 .seat(SeatingAssignment.of(0, 5))
                 .seat(SeatingAssignment.of(0, 6))
                 .build();
 
-        Assertions.assertEquals(finalTicket, expectedTicket);
+        Assertions.assertEquals(acquiredTicket, expectedTicket);
     }
 
     @Test
@@ -37,12 +41,14 @@ public final class SafetyTest {
 
         vendor.vend(theatre, Request.of("R001", 2));
         vendor.vend(theatre, Request.of("R002", 2));
-        Ticket finalTicket = vendor.vend(theatre, Request.of("R003", 1));
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R003", 1));
+        Assertions.assertTrue(finalTicket.isPresent());
 
+        Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
                 .seat(SeatingAssignment.of(1, 0))
                 .build();
 
-        Assertions.assertEquals(finalTicket, expectedTicket);
+        Assertions.assertEquals(acquiredTicket, expectedTicket);
     }
 }
