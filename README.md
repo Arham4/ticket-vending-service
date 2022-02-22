@@ -6,6 +6,7 @@ This is my attempt at the Walmart Assessment (Backend).
 
 - "Satisfaction" is defined as (in this order) (according to [MentalFloss.com](https://www.mentalfloss.com/article/578639/best-place-to-sit-in-movie-theater)):
   - Prefer everyone in the request to be seated together.
+    - **If this preference is not satisfied, everyone is seated as if they are individually booked.**
   - Prefer the last 2/3rd rows.
   - Prefer the center of rows, with respect to party size.
     - For example, for 20 seats, a party of 4 would prefer columns 9, 10, 11, and 12 if available.
