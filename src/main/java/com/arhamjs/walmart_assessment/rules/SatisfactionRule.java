@@ -59,19 +59,23 @@ public final class SatisfactionRule implements SeatingRule {
             int right = startingColumn + offset;
 
             if (left >= 0) {
-                for (int seat = left; seat < left + request.getSeatsRequested(); seat++) {
-                    if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seat)) {
-                        result.add(SeatingAssignment.of(row, seat));
-                    }
+                for (int seatStart = left; seatStart < left + request.getSeatsRequested(); seatStart++) {
+                    addImmediateSeatsIfAvailable(result, map, request, row, seatStart);
                 }
             }
 
             if (right + request.getSeatsRequested() < map.getSeats()) {
-                for (int seat = right; seat < right + request.getSeatsRequested(); seat++) {
-                    if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seat)) {
-                        result.add(SeatingAssignment.of(row, seat));
-                    }
+                for (int seatStart = right; seatStart < right + request.getSeatsRequested(); seatStart++) {
+                    addImmediateSeatsIfAvailable(result, map, request, row, seatStart);
                 }
+            }
+        }
+    }
+
+    private void addImmediateSeatsIfAvailable(Set<SeatingAssignment> result, SeatingMap map, Request request, int row, int seatStart) {
+        if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seatStart)) {
+            for (int seat = seatStart; seat < seatStart + request.getSeatsRequested(); seat++) {
+                result.add(SeatingAssignment.of(row, seat));
             }
         }
     }
