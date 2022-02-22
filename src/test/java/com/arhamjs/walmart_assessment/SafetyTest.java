@@ -89,4 +89,20 @@ public final class SafetyTest {
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
+
+    @Test
+    public void Should_GiveEmptyTicket_IfNotSafe() {
+        SeatingMap map = SeatingMap.builder(2, 3)
+                .markOccupied(0, 1)
+                .build();
+        Theatre theatre = Theatre.of(map);
+
+        TicketVendor vendor = TicketVendor.with(SafetyRule.builder()
+                .distance(3)
+                .rule(AvailabilityRule.create())
+                .build());
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R001", 4));
+
+        Assertions.assertTrue(finalTicket.isEmpty());
+    }
 }
