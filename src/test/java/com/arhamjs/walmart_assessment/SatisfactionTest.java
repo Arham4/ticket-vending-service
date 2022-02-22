@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public final class SatisfactionTest {
     @Test
-    public void Should_PreferMiddleRow() {
+    public void Should_PreferTopRows() {
         final int rows = 10;
         SeatingMap map = SeatingMap.empty(rows, 20);
         Theatre theatre = Theatre.of(map);
@@ -33,7 +33,7 @@ public final class SatisfactionTest {
     }
 
     @Test
-    public void Should_PreferSeatingTogether_IfAvailableTowardsMiddle() {
+    public void Should_PreferSeatingTogether_IfAvailableTowardsTop() {
         final int rows = 10;
         SeatingMap map = SeatingMap.builder(rows, 20)
                 .markOccupied(rows / 3, 9)
@@ -55,7 +55,7 @@ public final class SatisfactionTest {
     }
 
     @Test
-    public void Should_PreferMiddleRow_IfSeatsRequestedGreaterThanColumns() {
+    public void Should_PreferTopRow_IfSeatsRequestedGreaterThanColumns() {
         final int rows = 10;
         SeatingMap map = SeatingMap.empty(rows, 3);
         Theatre theatre = Theatre.of(map);

@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public final class SafetySatisfactionAvailabilityTest {
     @Test
-    public void Should_GroupTowardsMiddle_AndRespectSafety() {
+    public void Should_GroupTowardsTop_AndRespectSafety() {
         final int rows = 10;
         SeatingMap map = SeatingMap.builder(rows, 20)
                 .markOccupied(rows / 3 * 2, 9)
@@ -42,7 +42,7 @@ public final class SafetySatisfactionAvailabilityTest {
     }
 
     @Test
-    public void Should_GroupTowardsMiddle_AndRespectSafety_WithSeatsRequestedGreaterThanColumns() {
+    public void Should_GroupTowardsTop_AndRespectSafety_WithSeatsRequestedGreaterThanColumns() {
         final int rows = 10;
         SeatingMap map = SeatingMap.builder(rows, 7)
                 .markOccupied(rows / 3 * 2, 2)
@@ -104,7 +104,7 @@ public final class SafetySatisfactionAvailabilityTest {
     }
 
     @Test
-    public void Should_Have4InMiddleCenter() {
+    public void Should_Have4InTopCenter() {
         final int rows = 10;
         SeatingMap map = SeatingMap.builder(rows, 20)
                 .build();
