@@ -1,5 +1,7 @@
 package com.arhamjs.walmart_assessment.vendor;
 
+import java.util.Objects;
+
 public final class Request {
     public static Request of(String identifier, int seatsRequested) {
         return new Request(identifier, seatsRequested);
@@ -19,5 +21,18 @@ public final class Request {
 
     public int getSeatsRequested() {
         return seatsRequested;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return seatsRequested == request.seatsRequested && Objects.equals(identifier, request.identifier);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(identifier, seatsRequested);
     }
 }
