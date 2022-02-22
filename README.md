@@ -37,3 +37,13 @@ R### N
 ```
 `###` - The request identifier
 `N` - The number of people requesting seats for the specific request.
+
+The following command runs the program:
+```
+gradle run --args="complete\path\to\input\file"
+```
+
+The following command runs all tests:
+```
+gradle test
+```
