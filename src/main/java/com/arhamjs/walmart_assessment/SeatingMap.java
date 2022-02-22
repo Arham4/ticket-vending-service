@@ -1,5 +1,7 @@
 package com.arhamjs.walmart_assessment;
 
+import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
+
 public final class SeatingMap {
     public static class SeatingMapBuilder {
         private boolean[][] map;
@@ -8,8 +10,24 @@ public final class SeatingMap {
             map = new boolean[rows][seats];
         }
 
+        private SeatingMapBuilder(SeatingMap map) {
+            this.map = map.map.clone();
+        }
+
         public SeatingMapBuilder markOccupied(int row, int seat) {
             map[row][seat] = true;
+            return this;
+        }
+
+        public SeatingMapBuilder markOccupied(SeatingAssignment assignment) {
+            map[assignment.getRow()][assignment.getSeat()] = true;
+            return this;
+        }
+
+        public SeatingMapBuilder markOccupied(SeatingAssignment[] assignments) {
+            for (SeatingAssignment assignment : assignments) {
+                markOccupied(assignment);
+            }
             return this;
         }
 
@@ -27,6 +45,10 @@ public final class SeatingMap {
         return new SeatingMapBuilder(rows, seats);
     }
 
+    public static SeatingMapBuilder builder(SeatingMap map) {
+        return new SeatingMapBuilder(map);
+    }
+
     private final boolean[][] map;
 
     private SeatingMap(boolean[][] map) {
@@ -34,6 +56,9 @@ public final class SeatingMap {
     }
 
     public boolean hasAssignedAt(int row, int seat) {
+        if (row < 0 || row >= map.length || seat < 0 || seat >= map[row].length) {
+            return false;
+        }
         return map[row][seat];
     }
 

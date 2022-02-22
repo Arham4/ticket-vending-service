@@ -20,7 +20,7 @@ public final class TicketVendor {
         return new TicketVendor(rules);
     }
 
-    private Rule[] rules;
+    private final Rule[] rules;
 
     private TicketVendor(Rule... rules) {
         this.rules = rules;
@@ -29,11 +29,7 @@ public final class TicketVendor {
     public Optional<Ticket> vend(Theatre theatre, Request request) {
         SeatingMap currentSeatingMap = theatre.getMap();
         Optional<SeatingAssignment[]> seatingAssignments = findViableSeatingAssignments(currentSeatingMap, request);
-        if (seatingAssignments.isPresent()) {
-            return theatre.createTicket(seatingAssignments.get());
-        } else {
-            return Optional.empty();
-        }
+        return seatingAssignments.flatMap(theatre::createTicket);
     }
 
     private Optional<SeatingAssignment[]> findViableSeatingAssignments(SeatingMap map, Request request) {
@@ -51,9 +47,17 @@ public final class TicketVendor {
             viableSeatingAssignments = rules[0].findViableSeatingAssignments(map);
         }
 
-        for (Rule rule : rules) {
+        System.out.println("viableSeatingAssignments.size() initial = " + viableSeatingAssignments.size());
+
+        for (int i = 1; i < rules.length; i++) {
+            Rule rule = rules[i];
+
+            System.out.println("Processing rule " + rule.getClass().getName());
             viableSeatingAssignments.retainAll(rule.findViableSeatingAssignments(map));
+            System.out.println("viableSeatingAssignments.size() after = " + viableSeatingAssignments.size());
         }
+
+        System.out.println("viableSeatingAssignments.size() final = " + viableSeatingAssignments.size());
 
         if (viableSeatingAssignments.size() < request.getSeatsRequested()) {
             return Optional.empty();
