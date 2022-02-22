@@ -1,5 +1,6 @@
 package com.arhamjs.walmart_assessment;
 
+import com.arhamjs.walmart_assessment.rules.AvailabilityRule;
 import com.arhamjs.walmart_assessment.rules.SatisfactionRule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
@@ -17,7 +18,7 @@ public final class SatisfactionTest {
         SeatingMap map = SeatingMap.empty(rows, 20);
         Theatre theatre = Theatre.of(map);
 
-        TicketVendor vendor = TicketVendor.with(SatisfactionRule.create());
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create()));
 
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R001", 2));
         Assertions.assertTrue(finalTicket.isPresent());
@@ -26,6 +27,28 @@ public final class SatisfactionTest {
         Ticket expectedTicket = Ticket.builder()
                 .seat(SeatingAssignment.of(rows / 3, 0))
                 .seat(SeatingAssignment.of(rows / 3, 1))
+                .build();
+
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
+    }
+
+    @Test
+    public void Should_PreferSeatingTogether_IfAvailableTowardsMiddle() {
+        final int rows = 10;
+        SeatingMap map = SeatingMap.builder(rows, 20)
+                .markOccupied(rows / 3, 1)
+                .build();
+        Theatre theatre = Theatre.of(map);
+
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create()));
+
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R001", 2));
+        Assertions.assertTrue(finalTicket.isPresent());
+
+        Ticket acquiredTicket = finalTicket.get();
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(rows / 3, 2))
+                .seat(SeatingAssignment.of(rows / 3, 3))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
