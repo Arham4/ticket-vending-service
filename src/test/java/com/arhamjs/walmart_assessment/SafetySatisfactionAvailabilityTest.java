@@ -17,8 +17,8 @@ public final class SafetySatisfactionAvailabilityTest {
     public void Should_GroupTowardsMiddle_AndRespectSafety() {
         final int rows = 10;
         SeatingMap map = SeatingMap.builder(rows, 20)
+                .markOccupied(rows / 3 * 2, 9)
                 .markOccupied(rows / 3 * 2, 10)
-                .markOccupied(rows / 3 * 2, 11)
                 .build();
         Theatre theatre = Theatre.of(map);
 
@@ -35,8 +35,8 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(rows / 3 * 2, 14))
                 .seat(SeatingAssignment.of(rows / 3 * 2, 15))
-                .seat(SeatingAssignment.of(rows / 3 * 2, 16))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);

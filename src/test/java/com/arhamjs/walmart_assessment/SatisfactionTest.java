@@ -47,8 +47,8 @@ public final class SatisfactionTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(rows / 3 * 2, 9))
                 .seat(SeatingAssignment.of(rows / 3 * 2, 10))
-                .seat(SeatingAssignment.of(rows / 3 * 2, 11))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
