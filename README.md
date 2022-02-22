@@ -21,6 +21,8 @@ This is my attempt at the Walmart Assessment (Backend).
   - There is no concept of "reserving" a seat without having purchased it.
 - If the amount of seats available is less than the amount of seats requested, the ticket is blank and invalid. The
 program will output the invalid request identifier. **Nobody from the request is given a seat.**
+- A request identifier may only be processed once. If a request identifier is re-used, the program will output the 
+invalid request. **The previous request will remain processed, but the new request will not be processed.**
 
 ## Setup
 

@@ -7,9 +7,7 @@ import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
 import com.google.common.base.Preconditions;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.arhamjs.walmart_assessment.util.ListUtils.retainAllOrdered;
@@ -21,15 +19,27 @@ public final class TicketVendor {
     }
 
     private final SeatingRule[] rules;
+    private final Set<String> requestsProcessed;
 
     private TicketVendor(SeatingRule... rules) {
         this.rules = rules;
+        this.requestsProcessed = new HashSet<>();
     }
 
     public Optional<Ticket> vend(Theatre theatre, Request request) {
         SeatingMap currentSeatingMap = theatre.getMap();
+
+        if (requestsProcessed.contains(request.getIdentifier())) {
+            return Optional.empty();
+        }
+
         Optional<SeatingAssignment[]> seatingAssignments = findViableSeatingAssignments(currentSeatingMap, request);
-        return seatingAssignments.map(assignments -> theatre.createTicket(request.getIdentifier(), assignments));
+        if (seatingAssignments.isPresent()) {
+            requestsProcessed.add(request.getIdentifier());
+            return Optional.of(theatre.createTicket(request.getIdentifier(), seatingAssignments.get()));
+        } else {
+            return Optional.empty();
+        }
     }
 
     private Optional<SeatingAssignment[]> findViableSeatingAssignments(SeatingMap map, Request request) {
