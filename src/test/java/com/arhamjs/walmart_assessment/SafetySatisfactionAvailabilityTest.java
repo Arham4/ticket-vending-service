@@ -72,4 +72,31 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
+
+    @Test
+    public void Should_Have1InFront_Have1InMiddle_Have3InBack_If1ExistsInMiddleCenter_And4Request() {
+        SeatingMap map = SeatingMap.builder(3, 3)
+                .markOccupied(1, 1)
+                .build();
+        Theatre theatre = Theatre.of(map);
+
+        AvailabilityRule availabilityRule = AvailabilityRule.create();
+        SafetyRule safetyRule = SafetyRule.builder()
+                .distance(3)
+                .rule(availabilityRule)
+                .build();
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(availabilityRule, safetyRule), safetyRule, availabilityRule);
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R001", 4));
+        Assertions.assertTrue(finalTicket.isPresent());
+
+        Ticket acquiredTicket = finalTicket.get();
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(2, 0))
+                .seat(SeatingAssignment.of(2, 1))
+                .seat(SeatingAssignment.of(2, 2))
+                .seat(SeatingAssignment.of(0, 0))
+                .build();
+
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
+    }
 }
