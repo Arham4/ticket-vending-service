@@ -46,10 +46,6 @@ public final class SafetyRule implements SeatingRule, CompoundingRule {
         List<SeatingAssignment> result = new ArrayList<>();
         for (int row = 0; row < map.getRows(); row++) {
             for (int seat = 0; seat < map.getSeats(); seat++) {
-                if (!abidesAll(compoundingRules, map, row, seat)) {
-                    continue;
-                }
-
                 if (abides(map, row, seat)) {
                     result.add(SeatingAssignment.of(row, seat));
                 }
@@ -64,8 +60,8 @@ public final class SafetyRule implements SeatingRule, CompoundingRule {
     }
 
     private boolean isSafeFromLeft(SeatingMap map, int row, int seat) {
-        for (int i = 1; i <= distance; i++) {
-            if (map.hasAssignedAt(row, seat - i)) {
+        for (int i = 0; i <= distance; i++) {
+            if (!abidesAll(compoundingRules, map, row, seat - i)) {
                 return false;
             }
         }
@@ -73,8 +69,8 @@ public final class SafetyRule implements SeatingRule, CompoundingRule {
     }
 
     private boolean isSafeFromRight(SeatingMap map, int row, int seat) {
-        for (int i = 1; i <= distance; i++) {
-            if (map.hasAssignedAt(row, seat + i)) {
+        for (int i = 0; i <= distance; i++) {
+            if (!abidesAll(compoundingRules, map, row, seat + 1)) {
                 return false;
             }
         }
