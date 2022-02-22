@@ -29,7 +29,7 @@ public final class TicketVendor {
     public Optional<Ticket> vend(Theatre theatre, Request request) {
         SeatingMap currentSeatingMap = theatre.getMap();
         Optional<SeatingAssignment[]> seatingAssignments = findViableSeatingAssignments(currentSeatingMap, request);
-        return seatingAssignments.map(theatre::createTicket);
+        return seatingAssignments.map(assignments -> theatre.createTicket(request.getIdentifier(), assignments));
     }
 
     private Optional<SeatingAssignment[]> findViableSeatingAssignments(SeatingMap map, Request request) {

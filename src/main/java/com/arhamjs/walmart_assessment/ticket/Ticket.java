@@ -6,7 +6,13 @@ import java.util.List;
 
 public final class Ticket {
     public static class TicketBuilder {
+        private String requestIdentifier;
         private final List<SeatingAssignment> assignments = new ArrayList<>();
+
+        public TicketBuilder requestIdentifier(String requestIdentifier) {
+            this.requestIdentifier = requestIdentifier;
+            return this;
+        }
 
         public TicketBuilder seat(SeatingAssignment assignment) {
             assignments.add(assignment);
@@ -14,7 +20,7 @@ public final class Ticket {
         }
 
         public Ticket build() {
-            return new Ticket(assignments.toArray(new SeatingAssignment[0]));
+            return new Ticket(requestIdentifier, assignments.toArray(new SeatingAssignment[0]));
         }
     }
 
@@ -22,14 +28,20 @@ public final class Ticket {
         return new TicketBuilder();
     }
 
-    public static Ticket of(SeatingAssignment[] assignments) {
-        return new Ticket(assignments);
+    public static Ticket of(String requestIdentifier, SeatingAssignment[] assignments) {
+        return new Ticket(requestIdentifier, assignments);
     }
 
+    private final String requestIdentifier;
     private final SeatingAssignment[] seatingAssignments;
 
-    private Ticket(SeatingAssignment[] seatingAssignments) {
+    private Ticket(String requestIdentifier, SeatingAssignment[] seatingAssignments) {
+        this.requestIdentifier = requestIdentifier;
         this.seatingAssignments = seatingAssignments;
+    }
+
+    public String getRequestIdentifier() {
+        return requestIdentifier;
     }
 
     @Override
@@ -48,6 +60,7 @@ public final class Ticket {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Ticket{");
+        sb.append("requestIdentifier=").append(requestIdentifier).append(",");
         sb.append("seatingAssignments=").append(Arrays.toString(seatingAssignments));
         sb.append('}');
         return sb.toString();

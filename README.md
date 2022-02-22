@@ -19,3 +19,10 @@ This is my attempt at the Walmart Assessment (Backend).
 - "Availability" is defined as:
   - A booking has been completely processed for a respective seat.
   - There is no concept of "reserving" a seat without having purchased it.
+
+## Setup
+
+The following are required for this program:
+- Java 8 or above
+- Gradle
+

@@ -17,12 +17,12 @@ public final class Theatre {
         this.map = map;
     }
 
-    public Ticket createTicket(SeatingAssignment[] assignments) {
+    public Ticket createTicket(String requestIdentifier, SeatingAssignment[] assignments) {
         map = SeatingMap.builder(map)
                 .markOccupied(assignments)
                 .build();
 
-        return Ticket.of(assignments);
+        return Ticket.of(requestIdentifier, assignments);
     }
 
     public SeatingMap getMap() {
