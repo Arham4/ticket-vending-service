@@ -59,18 +59,20 @@ public final class SafetyRule implements SeatingRule, CompoundingRule {
         return isSafeFromLeft(map, row, seat) && isSafeFromRight(map, row, seat);
     }
 
-    private boolean isSafeFromLeft(SeatingMap map, int row, int seat) {
+    private boolean isSafeFromLeft(SeatingMap map, int row, int initialSeat) {
         for (int i = 0; i <= distance; i++) {
-            if (!abidesAll(compoundingRules, map, row, seat - i)) {
+            int seat = initialSeat - i;
+            if (seat >= 0 && seat < map.getSeats() && !abidesAll(compoundingRules, map, row, seat)) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean isSafeFromRight(SeatingMap map, int row, int seat) {
+    private boolean isSafeFromRight(SeatingMap map, int row, int initialSeat) {
         for (int i = 0; i <= distance; i++) {
-            if (!abidesAll(compoundingRules, map, row, seat + 1)) {
+            int seat = initialSeat + i;
+            if (seat >= 0 && seat < map.getSeats() && !abidesAll(compoundingRules, map, row, seat)) {
                 return false;
             }
         }

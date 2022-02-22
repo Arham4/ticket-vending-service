@@ -57,7 +57,7 @@ public final class SeatingMap {
 
     public boolean hasAssignedAt(int row, int seat) {
         if (row < 0 || row >= map.length || seat < 0 || seat >= map[row].length) {
-            return false;
+            throw new IllegalArgumentException("Invalid position check");
         }
         return map[row][seat];
     }
