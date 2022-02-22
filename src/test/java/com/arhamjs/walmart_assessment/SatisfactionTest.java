@@ -25,8 +25,8 @@ public final class SatisfactionTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3, 0))
-                .seat(SeatingAssignment.of(rows / 3, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 9))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 10))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
@@ -36,7 +36,7 @@ public final class SatisfactionTest {
     public void Should_PreferSeatingTogether_IfAvailableTowardsMiddle() {
         final int rows = 10;
         SeatingMap map = SeatingMap.builder(rows, 20)
-                .markOccupied(rows / 3, 1)
+                .markOccupied(rows / 3, 9)
                 .build();
         Theatre theatre = Theatre.of(map);
 
@@ -47,8 +47,8 @@ public final class SatisfactionTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3, 2))
-                .seat(SeatingAssignment.of(rows / 3, 3))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 10))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 11))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
@@ -67,11 +67,11 @@ public final class SatisfactionTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3, 0))
-                .seat(SeatingAssignment.of(rows / 3, 1))
-                .seat(SeatingAssignment.of(rows / 3, 2))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 0))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 0))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 2))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 0))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 1))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);

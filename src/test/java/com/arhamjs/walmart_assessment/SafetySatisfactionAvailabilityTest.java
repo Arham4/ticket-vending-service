@@ -16,7 +16,10 @@ public final class SafetySatisfactionAvailabilityTest {
     @Test
     public void Should_GroupTowardsMiddle_AndRespectSafety() {
         final int rows = 10;
-        SeatingMap map = SeatingMap.empty(rows, 20);
+        SeatingMap map = SeatingMap.builder(rows, 20)
+                .markOccupied(rows / 3 * 2, 10)
+                .markOccupied(rows / 3 * 2, 11)
+                .build();
         Theatre theatre = Theatre.of(map);
 
         AvailabilityRule availabilityRule = AvailabilityRule.create();
@@ -32,8 +35,8 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3, 5))
-                .seat(SeatingAssignment.of(rows / 3, 6))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 15))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 16))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
@@ -42,7 +45,10 @@ public final class SafetySatisfactionAvailabilityTest {
     @Test
     public void Should_GroupTowardsMiddle_AndRespectSafety_WithSeatsRequestedGreaterThanColumns() {
         final int rows = 10;
-        SeatingMap map = SeatingMap.empty(rows, 7);
+        SeatingMap map = SeatingMap.builder(rows, 7)
+                .markOccupied(rows / 3 * 2, 2)
+                .markOccupied(rows / 3 * 2, 3)
+                .build();
         Theatre theatre = Theatre.of(map);
 
         AvailabilityRule availabilityRule = AvailabilityRule.create();
@@ -59,24 +65,24 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3 + 1, 0))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 1))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 2))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 3))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 4))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 5))
-                .seat(SeatingAssignment.of(rows / 3 + 1, 6))
-                .seat(SeatingAssignment.of(rows / 3 + 2, 0))
-                .seat(SeatingAssignment.of(rows / 3 + 2, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 0))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 2))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 3))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 4))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 5))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 6))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 2, 0))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 2, 1))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
 
     @Test
-    public void Should_Have1InFront_Have1InMiddle_Have3InBack_If1ExistsInMiddleCenter_And4Request() {
+    public void Should_Have1InFront_Have3InMiddle_Have1InBack_If1ExistsInBack_And4Request() {
         SeatingMap map = SeatingMap.builder(3, 3)
-                .markOccupied(1, 1)
+                .markOccupied(2, 1)
                 .build();
         Theatre theatre = Theatre.of(map);
 
@@ -91,9 +97,9 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(2, 0))
-                .seat(SeatingAssignment.of(2, 1))
-                .seat(SeatingAssignment.of(2, 2))
+                .seat(SeatingAssignment.of(1, 0))
+                .seat(SeatingAssignment.of(1, 1))
+                .seat(SeatingAssignment.of(1, 2))
                 .seat(SeatingAssignment.of(0, 0))
                 .build();
 
