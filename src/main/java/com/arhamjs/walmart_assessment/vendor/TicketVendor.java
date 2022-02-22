@@ -52,6 +52,7 @@ public final class TicketVendor {
             viableSeatingAssignments.retainAll(rule.findViableSeatingAssignments(map, request));
         }
 
+        System.out.println("viableSeatingAssignments = " + viableSeatingAssignments);
         if (viableSeatingAssignments.size() < request.getSeatsRequested()) {
             return Optional.empty();
         }

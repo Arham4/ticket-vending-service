@@ -67,11 +67,11 @@ public final class SatisfactionTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3 * 2, 0))
                 .seat(SeatingAssignment.of(rows / 3 * 2, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2, 0))
                 .seat(SeatingAssignment.of(rows / 3 * 2, 2))
-                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 0))
                 .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 0))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);

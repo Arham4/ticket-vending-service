@@ -3,7 +3,6 @@ package com.arhamjs.walmart_assessment.rules;
 import com.arhamjs.walmart_assessment.SeatingMap;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.vendor.Request;
-import com.google.common.base.Preconditions;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -40,24 +39,41 @@ public final class SatisfactionRule implements SeatingRule {
     private Set<SeatingAssignment> findSeatsTogether(SeatingMap map, Request request) {
         Set<SeatingAssignment> result = new LinkedHashSet<>();
 
-        int middleStartingIndex = map.getRows() / 3;
-        for (int row = middleStartingIndex; row < map.getRows(); row++) {
-            for (int seat = 0; seat < map.getSeats(); seat++) {
-                if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seat)) {
-                    result.add(SeatingAssignment.of(row, seat));
-                }
-            }
+        int topStartingIndex = map.getRows() / 3 * 2;
+        int startingColumn = map.getSeats() / 2 - request.getSeatsRequested() / 2;
+
+        for (int row = topStartingIndex; row < map.getRows(); row++) {
+            addCenterSeatsTogether(result, map, request, row, startingColumn);
         }
 
-        for (int row = middleStartingIndex - 1; row >= 0; row--) {
-            for (int seat = 0; seat < map.getSeats(); seat++) {
-                if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seat)) {
-                    result.add(SeatingAssignment.of(row, seat));
-                }
-            }
+        for (int row = topStartingIndex - 1; row >= 0; row--) {
+            addCenterSeatsTogether(result, map, request, row, startingColumn);
         }
 
         return result;
+    }
+
+    private void addCenterSeatsTogether(Set<SeatingAssignment> result, SeatingMap map, Request request, int row, int startingColumn) {
+        for (int offset = 0; offset < map.getSeats() / 2 + 2; offset++) {
+            int left = startingColumn - offset;
+            int right = startingColumn + offset;
+
+            if (left >= 0) {
+                for (int seat = left; seat < left + request.getSeatsRequested(); seat++) {
+                    if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seat)) {
+                        result.add(SeatingAssignment.of(row, seat));
+                    }
+                }
+            }
+
+            if (right + request.getSeatsRequested() < map.getSeats()) {
+                for (int seat = right; seat < right + request.getSeatsRequested(); seat++) {
+                    if (immediateSeatsAvailable(request.getSeatsRequested(), map, row, seat)) {
+                        result.add(SeatingAssignment.of(row, seat));
+                    }
+                }
+            }
+        }
     }
 
     private boolean immediateSeatsAvailable(int amount, SeatingMap map, int row, int seat) {
@@ -72,20 +88,33 @@ public final class SatisfactionRule implements SeatingRule {
     private Set<SeatingAssignment> findSeatsFromMiddle(SeatingMap map) {
         Set<SeatingAssignment> result = new LinkedHashSet<>();
 
-        int middleStartingIndex = map.getRows() / 3;
-        for (int row = middleStartingIndex; row < map.getRows(); row++) {
-            for (int seat = 0; seat < map.getSeats(); seat++) {
-                result.add(SeatingAssignment.of(row, seat));
-            }
+        int topStartingIndex = map.getRows() / 3 * 2;
+        int startingColumn = map.getSeats() / 2;
+
+        for (int row = topStartingIndex; row < map.getRows(); row++) {
+            addCenterSeats(result, map, row, startingColumn);
         }
 
-        for (int row = middleStartingIndex - 1; row >= 0; row--) {
-            for (int seat = 0; seat < map.getSeats(); seat++) {
-                result.add(SeatingAssignment.of(row, seat));
-            }
+        for (int row = topStartingIndex - 1; row >= 0; row--) {
+            addCenterSeats(result, map, row, startingColumn);
         }
 
         return result;
+    }
+
+    private void addCenterSeats(Set<SeatingAssignment> result, SeatingMap map, int row, int startingColumn) {
+        for (int offset = 0; offset < map.getSeats() / 2 + 2; offset++) {
+            int left = startingColumn - offset;
+            int right = startingColumn + offset;
+
+            if (left >= 0) {
+                result.add(SeatingAssignment.of(row, left));
+            }
+
+            if (right < map.getSeats()) {
+                result.add(SeatingAssignment.of(row, right));
+            }
+        }
     }
 
     @Override
