@@ -8,7 +8,7 @@ import java.util.List;
 
 import static com.arhamjs.walmart_assessment.util.CompoundingRuleUtils.abidesAll;
 
-public final class SafetyRule implements SeatingRule {
+public final class SafetyRule implements SeatingRule, CompoundingRule {
     public static class SafetyRuleBuilder {
         int distance;
         final List<CompoundingRule> compoundingRules = new ArrayList<>();
@@ -49,12 +49,17 @@ public final class SafetyRule implements SeatingRule {
                     continue;
                 }
 
-                if (isSafeFromLeft(map, row, seat) && isSafeFromRight(map, row, seat)) {
+                if (abides(map, row, seat)) {
                     result.add(SeatingAssignment.of(row, seat));
                 }
             }
         }
         return result;
+    }
+
+    @Override
+    public boolean abides(SeatingMap map, int row, int seat) {
+        return isSafeFromLeft(map, row, seat) && isSafeFromRight(map, row, seat);
     }
 
     private boolean isSafeFromLeft(SeatingMap map, int row, int seat) {
