@@ -37,4 +37,37 @@ public final class SafetyAndSatisfactionTest {
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
+
+    @Test
+    public void Should_GroupTowardsMiddle_AndRespectSafety_WithSeatsRequestedGreaterThanColumns() {
+        final int rows = 10;
+        SeatingMap map = SeatingMap.empty(rows, 7);
+        Theatre theatre = Theatre.of(map);
+
+        SafetyRule safetyRule = SafetyRule.builder()
+                .distance(3)
+                .rule(AvailabilityRule.create())
+                .build();
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create(), safetyRule), safetyRule);
+
+        vendor.vend(theatre, Request.of("R001", 2));
+        vendor.vend(theatre, Request.of("R002", 2));
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R003", 9));
+        Assertions.assertTrue(finalTicket.isPresent());
+
+        Ticket acquiredTicket = finalTicket.get();
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(rows / 3 + 1, 0))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 1))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 2))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 3))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 4))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 5))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 6))
+                .seat(SeatingAssignment.of(rows / 3 + 2, 0))
+                .seat(SeatingAssignment.of(rows / 3 + 2, 1))
+                .build();
+
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
+    }
 }

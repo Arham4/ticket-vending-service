@@ -58,4 +58,35 @@ public final class SafetyTest {
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
+
+    @Test
+    public void Should_AssignGroupInNewRow_IfRowFull_WithSeatsRequestedGreaterThanColumns() {
+        SeatingMap map = SeatingMap.empty(10, 7);
+        Theatre theatre = Theatre.of(map);
+
+        TicketVendor vendor = TicketVendor.with(SafetyRule.builder()
+                .distance(3)
+                .rule(AvailabilityRule.create())
+                .build());
+
+        vendor.vend(theatre, Request.of("R001", 2));
+        vendor.vend(theatre, Request.of("R002", 2));
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R003", 9));
+        Assertions.assertTrue(finalTicket.isPresent());
+
+        Ticket acquiredTicket = finalTicket.get();
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(1, 0))
+                .seat(SeatingAssignment.of(1, 1))
+                .seat(SeatingAssignment.of(1, 2))
+                .seat(SeatingAssignment.of(1, 3))
+                .seat(SeatingAssignment.of(1, 4))
+                .seat(SeatingAssignment.of(1, 5))
+                .seat(SeatingAssignment.of(1, 6))
+                .seat(SeatingAssignment.of(2, 0))
+                .seat(SeatingAssignment.of(2, 1))
+                .build();
+
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
+    }
 }

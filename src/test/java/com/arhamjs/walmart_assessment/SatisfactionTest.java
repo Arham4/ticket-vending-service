@@ -53,4 +53,27 @@ public final class SatisfactionTest {
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
     }
+
+    @Test
+    public void Should_PreferMiddleRow_IfSeatsRequestedGreaterThanColumns() {
+        final int rows = 10;
+        SeatingMap map = SeatingMap.empty(rows, 3);
+        Theatre theatre = Theatre.of(map);
+
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create()));
+
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R001", 5));
+        Assertions.assertTrue(finalTicket.isPresent());
+
+        Ticket acquiredTicket = finalTicket.get();
+        Ticket expectedTicket = Ticket.builder()
+                .seat(SeatingAssignment.of(rows / 3, 0))
+                .seat(SeatingAssignment.of(rows / 3, 1))
+                .seat(SeatingAssignment.of(rows / 3, 2))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 0))
+                .seat(SeatingAssignment.of(rows / 3 + 1, 1))
+                .build();
+
+        Assertions.assertEquals(expectedTicket, acquiredTicket);
+    }
 }
