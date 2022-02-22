@@ -18,7 +18,10 @@ public final class SafetyTest {
         SeatingMap map = SeatingMap.empty(10, 20);
         Theatre theatre = Theatre.of(map);
 
-        TicketVendor vendor = TicketVendor.with(SafetyRule.with(AvailabilityRule.create()));
+        TicketVendor vendor = TicketVendor.with(SafetyRule.builder()
+                .distance(3)
+                .rule(AvailabilityRule.create())
+                .build());
 
         vendor.vend(theatre, Request.of("R001", 2));
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R002", 2));
@@ -38,7 +41,10 @@ public final class SafetyTest {
         SeatingMap map = SeatingMap.empty(10, 7);
         Theatre theatre = Theatre.of(map);
 
-        TicketVendor vendor = TicketVendor.with(SafetyRule.with(AvailabilityRule.create()));
+        TicketVendor vendor = TicketVendor.with(SafetyRule.builder()
+                .distance(3)
+                .rule(AvailabilityRule.create())
+                .build());
 
         vendor.vend(theatre, Request.of("R001", 2));
         vendor.vend(theatre, Request.of("R002", 2));

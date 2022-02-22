@@ -11,14 +11,34 @@ import java.util.List;
 import static com.arhamjs.walmart_assessment.util.CompoundingRuleUtils.abidesAll;
 
 public final class SafetyRule implements Rule {
+    public static class SafetyRuleBuilder {
+        int distance;
+        final List<CompoundingRule> compoundingRules = new ArrayList<>();
 
-    public static SafetyRule with(CompoundingRule... compoundingRule) {
-        return new SafetyRule(compoundingRule);
+        public SafetyRuleBuilder distance(int distance) {
+            this.distance = distance;
+            return this;
+        }
+
+        public SafetyRuleBuilder rule(CompoundingRule rule) {
+            compoundingRules.add(rule);
+            return this;
+        }
+
+        public SafetyRule build() {
+            return new SafetyRule(distance, compoundingRules.toArray(new CompoundingRule[0]));
+        }
     }
 
+    public static SafetyRuleBuilder builder() {
+        return new SafetyRuleBuilder();
+    }
+
+    private final int distance;
     private final CompoundingRule[] compoundingRules;
 
-    private SafetyRule(CompoundingRule[] compoundingRules) {
+    private SafetyRule(int distance, CompoundingRule[] compoundingRules) {
+        this.distance = distance;
         this.compoundingRules = compoundingRules;
     }
 
@@ -40,11 +60,21 @@ public final class SafetyRule implements Rule {
     }
 
     private boolean isSafeFromLeft(SeatingMap map, int row, int seat) {
-        return seat <= 2 || !map.hasAssignedAt(row, seat - 3);
+        for (int i = 1; i <= distance; i++) {
+            if (map.hasAssignedAt(row, seat - i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isSafeFromRight(SeatingMap map, int row, int seat) {
-        return seat >= map.getSeats() - 3 || !map.hasAssignedAt(row, seat + 3);
+        for (int i = 1; i <= distance; i++) {
+            if (map.hasAssignedAt(row, seat + i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
