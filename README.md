@@ -19,6 +19,7 @@ This is my attempt at the Walmart Assessment (Backend).
 - "Availability" is defined as:
   - A booking has been completely processed for a respective seat.
   - There is no concept of "reserving" a seat without having purchased it.
+- If the amount of seats available is less than the amount of seats requested, the ticket is blank and invalid.
 
 ## Setup
 
