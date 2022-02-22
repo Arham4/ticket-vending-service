@@ -62,15 +62,15 @@ public final class SafetySatisfactionAvailabilityTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 0))
-                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 1))
-                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 2))
                 .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 3))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 2))
                 .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 4))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 1))
                 .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 5))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 0))
                 .seat(SeatingAssignment.of(rows / 3 * 2 + 1, 6))
-                .seat(SeatingAssignment.of(rows / 3 * 2 + 2, 0))
-                .seat(SeatingAssignment.of(rows / 3 * 2 + 2, 1))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 2, 3))
+                .seat(SeatingAssignment.of(rows / 3 * 2 + 2, 2))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
