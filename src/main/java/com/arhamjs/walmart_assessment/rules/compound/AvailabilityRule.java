@@ -12,6 +12,6 @@ public final class AvailabilityRule implements CompoundingRule {
 
     @Override
     public boolean abides(SeatingMap map, int row, int seat) {
-        return map.hasAssignedAt(row, seat);
+        return !map.hasAssignedAt(row, seat);
     }
 }
