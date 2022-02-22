@@ -2,21 +2,23 @@ package com.arhamjs.walmart_assessment.parser;
 
 import com.arhamjs.walmart_assessment.vendor.Request;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public final class DefaultRequestParser implements RequestParser {
-
-    public static DefaultRequestParser create() {
-        return new DefaultRequestParser();
+public final class StringRequestParser implements RequestParser {
+    public static StringRequestParser with(String input) {
+        return new StringRequestParser(input);
     }
 
-    private DefaultRequestParser() {
+    private final String input;
+
+    private StringRequestParser(String input) {
+        this.input = input;
     }
 
     @Override
-    public List<Request> parse(String input) {
+    public List<Request> parse() throws IOException {
         List<Request> result = new ArrayList<>();
         for (String line : input.split("\n")) {
             String[] split = line.split(" ");

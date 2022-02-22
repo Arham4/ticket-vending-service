@@ -1,6 +1,6 @@
 package com.arhamjs.walmart_assessment;
 
-import com.arhamjs.walmart_assessment.parser.DefaultRequestParser;
+import com.arhamjs.walmart_assessment.parser.FileRequestParser;
 import com.arhamjs.walmart_assessment.parser.RequestParser;
 import com.arhamjs.walmart_assessment.rules.AvailabilityRule;
 import com.arhamjs.walmart_assessment.rules.SafetyRule;
@@ -24,10 +24,9 @@ public final class Main {
 
     public static void main(String[] args) throws IOException {
         String completeInputPath = String.join(" ", args);
-        String fileContent = Files.asCharSource(new File(completeInputPath), Charsets.UTF_8).read();
 
-        RequestParser parser = DefaultRequestParser.create();
-        List<Request> requests = parser.parse(fileContent);
+        RequestParser parser = FileRequestParser.with(new File(completeInputPath));
+        List<Request> requests = parser.parse();
 
         SeatingMap map = SeatingMap.empty(10, 20);
         Theatre theatre = Theatre.of(map);
