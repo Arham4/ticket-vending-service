@@ -1,7 +1,7 @@
 package com.arhamjs.walmart_assessment.util;
 
 import com.arhamjs.walmart_assessment.SeatingMap;
-import com.arhamjs.walmart_assessment.rules.compound.CompoundingRule;
+import com.arhamjs.walmart_assessment.rules.CompoundingRule;
 
 public final class CompoundingRuleUtils {
     private CompoundingRuleUtils() {

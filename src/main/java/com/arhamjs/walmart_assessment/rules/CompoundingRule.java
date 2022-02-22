@@ -1,4 +1,4 @@
-package com.arhamjs.walmart_assessment.rules.compound;
+package com.arhamjs.walmart_assessment.rules;
 
 import com.arhamjs.walmart_assessment.SeatingMap;
 

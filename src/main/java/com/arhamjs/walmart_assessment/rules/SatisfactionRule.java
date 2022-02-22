@@ -6,7 +6,7 @@ import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SatisfactionRule implements Rule {
+public final class SatisfactionRule implements SeatingRule {
     public static SatisfactionRule create() {
         return new SatisfactionRule();
     }

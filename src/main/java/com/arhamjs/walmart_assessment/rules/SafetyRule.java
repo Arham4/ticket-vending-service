@@ -1,16 +1,14 @@
 package com.arhamjs.walmart_assessment.rules;
 
 import com.arhamjs.walmart_assessment.SeatingMap;
-import com.arhamjs.walmart_assessment.rules.compound.CompoundingRule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
-import com.arhamjs.walmart_assessment.util.CompoundingRuleUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.arhamjs.walmart_assessment.util.CompoundingRuleUtils.abidesAll;
 
-public final class SafetyRule implements Rule {
+public final class SafetyRule implements SeatingRule {
     public static class SafetyRuleBuilder {
         int distance;
         final List<CompoundingRule> compoundingRules = new ArrayList<>();

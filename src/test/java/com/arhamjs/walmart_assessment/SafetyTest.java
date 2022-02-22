@@ -1,7 +1,7 @@
 package com.arhamjs.walmart_assessment;
 
 import com.arhamjs.walmart_assessment.rules.SafetyRule;
-import com.arhamjs.walmart_assessment.rules.compound.AvailabilityRule;
+import com.arhamjs.walmart_assessment.rules.AvailabilityRule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
 import com.arhamjs.walmart_assessment.vendor.Request;

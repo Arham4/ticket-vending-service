@@ -2,7 +2,7 @@ package com.arhamjs.walmart_assessment.vendor;
 
 import com.arhamjs.walmart_assessment.SeatingMap;
 import com.arhamjs.walmart_assessment.Theatre;
-import com.arhamjs.walmart_assessment.rules.Rule;
+import com.arhamjs.walmart_assessment.rules.SeatingRule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
 import com.google.common.base.Preconditions;
@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
 import static com.arhamjs.walmart_assessment.util.ListUtils.retainAllOrdered;
 
 public final class TicketVendor {
-    public static TicketVendor with(Rule... rules) {
+    public static TicketVendor with(SeatingRule... rules) {
         Preconditions.checkArgument(rules.length > 0);
         return new TicketVendor(rules);
     }
 
-    private final Rule[] rules;
+    private final SeatingRule[] rules;
 
-    private TicketVendor(Rule... rules) {
+    private TicketVendor(SeatingRule... rules) {
         this.rules = rules;
     }
 
@@ -35,7 +35,7 @@ public final class TicketVendor {
     private Optional<SeatingAssignment[]> findViableSeatingAssignments(SeatingMap map, Request request) {
         List<SeatingAssignment> viableSeatingAssignments;
 
-        List<Rule> orderedRules = Arrays.stream(rules).filter(Rule::orderMatters).collect(Collectors.toList());
+        List<SeatingRule> orderedRules = Arrays.stream(rules).filter(SeatingRule::orderMatters).collect(Collectors.toList());
         if (orderedRules.size() > 0) {
             viableSeatingAssignments = orderedRules.get(0).findViableSeatingAssignments(map);
 
@@ -48,7 +48,7 @@ public final class TicketVendor {
         }
 
         for (int i = 1; i < rules.length; i++) {
-            Rule rule = rules[i];
+            SeatingRule rule = rules[i];
             viableSeatingAssignments.retainAll(rule.findViableSeatingAssignments(map));
         }
 

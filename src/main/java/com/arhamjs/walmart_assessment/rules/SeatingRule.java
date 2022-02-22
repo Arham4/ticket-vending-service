@@ -5,7 +5,7 @@ import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 
 import java.util.List;
 
-public interface Rule {
+public interface SeatingRule {
     List<SeatingAssignment> findViableSeatingAssignments(SeatingMap map);
     boolean orderMatters();
 }
