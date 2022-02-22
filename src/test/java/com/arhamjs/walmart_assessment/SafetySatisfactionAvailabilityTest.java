@@ -29,7 +29,6 @@ public final class SafetySatisfactionAvailabilityTest {
                 .build();
         TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(availabilityRule, safetyRule), safetyRule, availabilityRule);
 
-        vendor.vend(theatre, Request.of("R001", 2));
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R002", 2));
         Assertions.assertTrue(finalTicket.isPresent());
 
