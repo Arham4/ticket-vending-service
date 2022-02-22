@@ -34,27 +34,27 @@ public final class TicketVendor {
         }
 
         Optional<SeatingAssignment[]> seatingAssignments = findViableSeatingAssignments(currentSeatingMap, request);
-        if (seatingAssignments.isPresent()) {
-            requestsProcessed.add(request.getIdentifier());
-            return Optional.of(theatre.createTicket(request.getIdentifier(), seatingAssignments.get()));
-        } else {
+        if (seatingAssignments.isEmpty()) {
             return Optional.empty();
         }
+
+        requestsProcessed.add(request.getIdentifier());
+        return Optional.of(theatre.createTicket(request.getIdentifier(), seatingAssignments.get()));
     }
 
     private Optional<SeatingAssignment[]> findViableSeatingAssignments(SeatingMap map, Request request) {
-        List<SeatingAssignment> viableSeatingAssignments;
-
         List<SeatingRule> orderedRules = Arrays.stream(rules).filter(SeatingRule::orderMatters).collect(Collectors.toList());
-        if (orderedRules.size() > 0) {
+
+        List<SeatingAssignment> viableSeatingAssignments;
+        if (orderedRules.isEmpty()) {
+            viableSeatingAssignments = rules[0].findViableSeatingAssignments(map, request);
+        } else {
             viableSeatingAssignments = orderedRules.get(0).findViableSeatingAssignments(map, request);
 
             for (int i = 1; i < orderedRules.size(); i++) {
                 List<SeatingAssignment> ruleAssignments = orderedRules.get(i).findViableSeatingAssignments(map, request);
                 retainAllOrdered(viableSeatingAssignments, ruleAssignments);
             }
-        } else {
-            viableSeatingAssignments = rules[0].findViableSeatingAssignments(map, request);
         }
 
         for (int i = 1; i < rules.length; i++) {
