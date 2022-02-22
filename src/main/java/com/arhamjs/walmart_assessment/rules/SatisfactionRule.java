@@ -82,7 +82,7 @@ public final class SatisfactionRule implements SeatingRule {
 
     private boolean immediateSeatsAvailable(int amount, SeatingMap map, int row, int seat) {
         for (int nextSeat = seat; nextSeat < seat + amount; nextSeat++) {
-            if (!abidesAll(rules, map, row, nextSeat)) {
+            if (nextSeat >= map.getSeats() || !abidesAll(rules, map, row, nextSeat)) {
                 return false;
             }
         }
