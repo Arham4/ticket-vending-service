@@ -43,7 +43,6 @@ public final class Main {
 
         List<Ticket> tickets = new ArrayList<>();
         for (Request request : requests) {
-            System.out.println("request = " + request);
             Optional<Ticket> ticket = vendor.vend(theatre, request);
             if (ticket.isPresent()) {
                 tickets.add(ticket.get());
