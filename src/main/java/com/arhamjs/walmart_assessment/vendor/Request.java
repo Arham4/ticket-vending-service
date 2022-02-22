@@ -24,6 +24,15 @@ public final class Request {
     }
 
     @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Request{");
+        sb.append("identifier='").append(identifier).append('\'');
+        sb.append(", seatsRequested=").append(seatsRequested);
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
