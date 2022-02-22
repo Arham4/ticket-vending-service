@@ -1,5 +1,7 @@
 package com.arhamjs.walmart_assessment.ticket;
 
+import java.util.Objects;
+
 public final class SeatingAssignment {
     public static SeatingAssignment of(int row, int seat) {
         return new SeatingAssignment(row, seat);
@@ -19,5 +21,27 @@ public final class SeatingAssignment {
 
     public int getSeat() {
         return seat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SeatingAssignment that = (SeatingAssignment) o;
+        return row == that.row && seat == that.seat;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(row, seat);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("SeatingAssignment{");
+        sb.append("row=").append(row);
+        sb.append(", seat=").append(seat);
+        sb.append('}');
+        return sb.toString();
     }
 }
