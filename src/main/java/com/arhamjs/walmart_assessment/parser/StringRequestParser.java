@@ -18,7 +18,7 @@ public final class StringRequestParser implements RequestParser {
     }
 
     @Override
-    public List<Request> parse() throws IOException {
+    public List<Request> parse() {
         List<Request> result = new ArrayList<>();
         for (String line : input.split("\n")) {
             String[] split = line.split(" ");
