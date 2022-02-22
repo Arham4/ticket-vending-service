@@ -22,7 +22,15 @@ public final class AvailabilityRule implements SeatingRule, CompoundingRule {
 
     @Override
     public List<SeatingAssignment> findViableSeatingAssignments(SeatingMap map, Request request) {
-        return new ArrayList<>();
+        List<SeatingAssignment> assignments = new ArrayList<>();
+        for (int row = 0; row < map.getRows(); row++) {
+            for (int seat = 0; seat < map.getSeats(); seat++) {
+                if (abides(map, row, seat)) {
+                    assignments.add(SeatingAssignment.of(row, seat));
+                }
+            }
+        }
+        return assignments;
     }
 
     @Override
