@@ -16,7 +16,21 @@ public final class SatisfactionRule implements Rule {
 
     @Override
     public List<SeatingAssignment> findViableSeatingAssignments(SeatingMap map) {
-        return new ArrayList<>();
+        List<SeatingAssignment> result = new ArrayList<>();
+
+        int middleStartingIndex = map.getRows() / 3;
+        for (int row = middleStartingIndex; row < map.getRows(); row++) {
+            for (int seat = 0; seat < map.getSeats(); seat++) {
+                result.add(SeatingAssignment.of(row, seat));
+            }
+        }
+
+        for (int row = middleStartingIndex - 1; row >= 0; row--) {
+            for (int seat = 0; seat < map.getSeats(); seat++) {
+                result.add(SeatingAssignment.of(row, seat));
+            }
+        }
+        return result;
     }
 
     @Override
