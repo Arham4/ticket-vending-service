@@ -26,3 +26,12 @@ The following are required for this program:
 - Java 8 or above
 - Gradle
 
+The following input file format is expected:
+```
+R### N
+R### N
+...
+R### N
+```
+`###` - The request identifier
+`N` - The number of people requesting seats for the specific request.
