@@ -13,7 +13,8 @@ import java.util.Optional;
 public final class SatisfactionTest {
     @Test
     public void Should_StartGroupingOnRow4_IfRowCountIs10() {
-        SeatingMap map = SeatingMap.empty(10, 20);
+        final int rows = 10;
+        SeatingMap map = SeatingMap.empty(rows, 20);
         Theatre theatre = Theatre.of(map);
 
         TicketVendor vendor = TicketVendor.with(SatisfactionRule.create());
@@ -23,8 +24,8 @@ public final class SatisfactionTest {
 
         Ticket acquiredTicket = finalTicket.get();
         Ticket expectedTicket = Ticket.builder()
-                .seat(SeatingAssignment.of(3, 0))
-                .seat(SeatingAssignment.of(3, 1))
+                .seat(SeatingAssignment.of(rows / 3, 0))
+                .seat(SeatingAssignment.of(rows / 3, 1))
                 .build();
 
         Assertions.assertEquals(expectedTicket, acquiredTicket);
