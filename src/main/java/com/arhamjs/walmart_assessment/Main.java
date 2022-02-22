@@ -56,7 +56,7 @@ public final class Main {
         BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile.getAbsolutePath()));
 
         for (Ticket ticket : tickets) {
-            writer.write(ticket.toOutputString());
+            writer.write(ticket.toOutputString() + "\n");
         }
 
         writer.close();
