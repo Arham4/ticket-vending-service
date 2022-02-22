@@ -4,7 +4,12 @@ import com.arhamjs.walmart_assessment.SeatingMap;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.vendor.Request;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import static com.arhamjs.walmart_assessment.util.CompoundingRuleUtils.abidesAll;
 
 public final class SatisfactionRule implements SeatingRule {
     public static SatisfactionRule create() {
@@ -55,8 +60,8 @@ public final class SatisfactionRule implements SeatingRule {
     }
 
     private boolean immediateSeatsAvailable(int amount, SeatingMap map, int row, int seat) {
-        for (int nextSeat = seat + 1; nextSeat < seat + amount; nextSeat++) {
-            if (map.hasAssignedAt(row, nextSeat)) {
+        for (int nextSeat = seat; nextSeat < seat + amount; nextSeat++) {
+            if (!abidesAll(rules, map, row, nextSeat)) {
                 return false;
             }
         }

@@ -19,10 +19,11 @@ public final class SafetyAndSatisfactionTest {
         SeatingMap map = SeatingMap.empty(rows, 20);
         Theatre theatre = Theatre.of(map);
 
-        TicketVendor vendor = TicketVendor.with(SatisfactionRule.create(), SafetyRule.builder()
+        SafetyRule safetyRule = SafetyRule.builder()
                 .distance(3)
                 .rule(AvailabilityRule.create())
-                .build());
+                .build();
+        TicketVendor vendor = TicketVendor.with(SatisfactionRule.with(AvailabilityRule.create(), safetyRule), safetyRule);
 
         vendor.vend(theatre, Request.of("R001", 2));
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R002", 2));
