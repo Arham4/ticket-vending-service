@@ -37,4 +37,16 @@ public final class AvailabilityTest {
 
         Assertions.assertTrue(finalTicket.isEmpty());
     }
+
+    @Test
+    public void Should_ProvideTicket_IfSpotAvailable() {
+        SeatingMap map = SeatingMap.empty(1, 1);
+        Theatre theatre = Theatre.of(map);
+
+        TicketVendor vendor = TicketVendor.with(AvailabilityRule.create());
+
+        Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R001", 1));
+
+        Assertions.assertTrue(finalTicket.isPresent());
+    }
 }
