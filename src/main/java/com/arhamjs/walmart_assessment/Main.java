@@ -23,7 +23,7 @@ public final class Main {
     private static final String OUTPUT_PATH = "output.txt";
 
     public static void main(String[] args) throws IOException {
-        String completeInputPath = args[0];
+        String completeInputPath = String.join(" ", args);
         String fileContent = Files.asCharSource(new File(completeInputPath), Charsets.UTF_8).read();
 
         RequestParser parser = DefaultRequestParser.create();
