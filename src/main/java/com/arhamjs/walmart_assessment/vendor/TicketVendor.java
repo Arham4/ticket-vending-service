@@ -47,17 +47,10 @@ public final class TicketVendor {
             viableSeatingAssignments = rules[0].findViableSeatingAssignments(map);
         }
 
-        System.out.println("viableSeatingAssignments.size() initial = " + viableSeatingAssignments.size());
-
         for (int i = 1; i < rules.length; i++) {
             Rule rule = rules[i];
-
-            System.out.println("Processing rule " + rule.getClass().getName());
             viableSeatingAssignments.retainAll(rule.findViableSeatingAssignments(map));
-            System.out.println("viableSeatingAssignments.size() after = " + viableSeatingAssignments.size());
         }
-
-        System.out.println("viableSeatingAssignments.size() final = " + viableSeatingAssignments.size());
 
         if (viableSeatingAssignments.size() < request.getSeatsRequested()) {
             return Optional.empty();
