@@ -37,19 +37,19 @@ public final class TicketVendor {
 
         List<SeatingRule> orderedRules = Arrays.stream(rules).filter(SeatingRule::orderMatters).collect(Collectors.toList());
         if (orderedRules.size() > 0) {
-            viableSeatingAssignments = orderedRules.get(0).findViableSeatingAssignments(map);
+            viableSeatingAssignments = orderedRules.get(0).findViableSeatingAssignments(map, request);
 
             for (int i = 1; i < orderedRules.size(); i++) {
-                List<SeatingAssignment> ruleAssignments = orderedRules.get(i).findViableSeatingAssignments(map);
+                List<SeatingAssignment> ruleAssignments = orderedRules.get(i).findViableSeatingAssignments(map, request);
                 retainAllOrdered(viableSeatingAssignments, ruleAssignments);
             }
         } else {
-            viableSeatingAssignments = rules[0].findViableSeatingAssignments(map);
+            viableSeatingAssignments = rules[0].findViableSeatingAssignments(map, request);
         }
 
         for (int i = 1; i < rules.length; i++) {
             SeatingRule rule = rules[i];
-            viableSeatingAssignments.retainAll(rule.findViableSeatingAssignments(map));
+            viableSeatingAssignments.retainAll(rule.findViableSeatingAssignments(map, request));
         }
 
         if (viableSeatingAssignments.size() < request.getSeatsRequested()) {
