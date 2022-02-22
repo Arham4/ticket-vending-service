@@ -32,4 +32,16 @@ public final class SeatingMap {
     private SeatingMap(boolean[][] map) {
         this.map = map;
     }
+
+    public boolean hasAssignedAt(int row, int seat) {
+        return map[row][seat];
+    }
+
+    public int getRows() {
+        return map.length;
+    }
+
+    public int getSeats() {
+        return map[0].length;
+    }
 }

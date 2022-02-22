@@ -1,6 +1,7 @@
 package com.arhamjs.walmart_assessment;
 
 import com.arhamjs.walmart_assessment.rules.SafetyRule;
+import com.arhamjs.walmart_assessment.rules.compound.AvailabilityRule;
 import com.arhamjs.walmart_assessment.ticket.SeatingAssignment;
 import com.arhamjs.walmart_assessment.ticket.Ticket;
 import com.arhamjs.walmart_assessment.vendor.Request;
@@ -17,7 +18,7 @@ public final class SafetyTest {
         SeatingMap map = SeatingMap.empty(10, 20);
         Theatre theatre = Theatre.of(map);
 
-        TicketVendor vendor = TicketVendor.with(SafetyRule.create());
+        TicketVendor vendor = TicketVendor.with(SafetyRule.with(AvailabilityRule.create()));
 
         vendor.vend(theatre, Request.of("R001", 2));
         Optional<Ticket> finalTicket = vendor.vend(theatre, Request.of("R002", 2));
@@ -37,7 +38,7 @@ public final class SafetyTest {
         SeatingMap map = SeatingMap.empty(10, 7);
         Theatre theatre = Theatre.of(map);
 
-        TicketVendor vendor = TicketVendor.with(SafetyRule.create());
+        TicketVendor vendor = TicketVendor.with(SafetyRule.with(AvailabilityRule.create()));
 
         vendor.vend(theatre, Request.of("R001", 2));
         vendor.vend(theatre, Request.of("R002", 2));
