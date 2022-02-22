@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public final class SatisfactionTest {
     @Test
-    public void Should_StartGroupingOnRow4_IfRowCountIs10() {
+    public void Should_PreferMiddleRow() {
         final int rows = 10;
         SeatingMap map = SeatingMap.empty(rows, 20);
         Theatre theatre = Theatre.of(map);
