@@ -1,6 +1,6 @@
-# Ticket System
+# Ticket Vending Service
 
-This a ticket vending system that aims to assign seats in a movie theatre according to 3 criterion: Satisfaction, Safety, and Availability. This was done as a technical assessment for a company.
+This a ticket vending service that aims to assign seats in a movie theatre according to 3 criterion: Satisfaction, Safety, and Availability. This was done as a technical assessment for a company that was wanting to see how I make unit tests.
 
 ## Assumptions
 
