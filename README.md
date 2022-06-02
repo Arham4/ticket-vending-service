@@ -1,6 +1,6 @@
-# Arham Siddiqui's Walmart Assessment (Backend)
+# Ticket System
 
-This is my attempt at the Walmart Assessment (Backend).
+This a ticket vending system that aims to assign seats in a movie theatre according to 3 criterion: Satisfaction, Safety, and Availability. This was done as a technical assessment for a company.
 
 ## Assumptions
 
